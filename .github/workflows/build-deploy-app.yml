@@ -18,7 +18,7 @@ jobs:
   # DRY - Återanvänder våran run-all-tests.yml
   test-application:
     name: run tests
-    uses: alsomeb/devops-final/.github/workflows/run-all-tests.yml@main
+    uses: ./.github/workflows/run-all-tests.yml
 
   build-and-push-application:
     name: build-and-push-application
