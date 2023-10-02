@@ -1,0 +1,27 @@
+name: run-all-tests
+on: [push]
+
+jobs:
+  # Yttre Loopen: Säkerställa att enhetstester körs automatiskt i alla branches på github.
+  test-application:
+    name: Unit-Integration-Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'corretto'
+          java-version: '17'
+
+      # Give wrapper rw rights
+      - name: Chmod gradle wrapper
+        run: chmod +x ./gradlew
+
+      # Build With Gradle Action
+      - name: Build with Gradle
+        uses: gradle/gradle-build-action@749f47bda3e44aa060e82d7b3ef7e40d953bd629
+        with:
+          arguments: test
