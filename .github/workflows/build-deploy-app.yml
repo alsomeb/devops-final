@@ -15,15 +15,21 @@ env:
 
   # HÄR BYGGER VI IMG OCH SKICKAR UPP TILL GHCR REGISTRY
 jobs:
+  # DRY - Återanvänder våran run-all-tests.yml
+  test-application:
+    name: run tests
+    uses: alsomeb/devops-final/.github/workflows/run-all-tests.yml@main
+
   build-and-push-application:
     name: build-and-push-application
+
     runs-on: ubuntu-latest
     # Sets the permissions granted to the `GITHUB_TOKEN` for the actions in this job.
     permissions:
       contents: read
       packages: write
     # måste klara testerna först innan vi kan bygga applikationen
-    needs: test-application
+    needs: test-application # Testerna måste gå igenom annars bygger vi inte
     steps:
       - name: Check for GITHUB_TOKEN
         run: |
