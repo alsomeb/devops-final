@@ -15,7 +15,7 @@
 
 ### Github Actions
 - **.github/workflows** == Here is my yml files containing Github Actions config
--  **Enhetstester** körs automatiskt i alla branches på github.
+-  **Enhetstester** körs automatiskt i alla branches på github. ***(run-all-tests.yml)***
 - **Feature till PR:** En actions process där en feature kan skapas i en branch och läggas till som
-  PR, varpå tester körs och koden kan senare mergas till main.
+  PR, varpå tester körs och koden kan senare mergas till main. ***(build-deploy-app.yml)***
 
