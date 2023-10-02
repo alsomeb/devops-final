@@ -1,5 +1,5 @@
 name: run-all-tests
-on: # Körs bara på push samt återanvänds i build-deploy-app.yml
+on: # Körs bara på push samt återanvänds i build-deploy-app.yml med en workflow_call
   push:
   workflow_call:
 
