@@ -1,5 +1,5 @@
 name: run-all-tests
-on: [push]
+on: [push] # Triggas även på PR
 
 jobs:
   # Yttre Loopen: Säkerställa att enhetstester körs automatiskt i alla branches på github.
