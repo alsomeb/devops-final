@@ -1,5 +1,7 @@
 name: run-all-tests
-on: [push]
+on: # Körs bara på push samt återanvänds i build-deploy-app.yml
+  push:
+  workflow_call:
 
 jobs:
   # Yttre Loopen: Säkerställa att enhetstester körs automatiskt i alla branches på github.

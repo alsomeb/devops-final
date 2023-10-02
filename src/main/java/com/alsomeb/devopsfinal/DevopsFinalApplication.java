@@ -15,6 +15,6 @@ public class DevopsFinalApplication implements CommandLineRunner{
 
 	@Override
 	public void run(String... args) throws Exception {
-		System.out.println("Merge conflict");
+		System.out.println("Merge conflict + Test feature + Test");
 	}
 }
