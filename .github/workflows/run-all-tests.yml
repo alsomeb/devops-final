@@ -20,8 +20,8 @@ jobs:
       - name: Chmod gradle wrapper
         run: chmod +x ./gradlew
 
-      # Build With Gradle Action
-      - name: Build with Gradle
+      # Gradle Build Action 'TEST'
+      - name: Gradle Test Action
         uses: gradle/gradle-build-action@749f47bda3e44aa060e82d7b3ef7e40d953bd629
         with:
           arguments: test
