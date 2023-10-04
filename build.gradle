@@ -24,3 +24,22 @@ dependencies {
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
+test {
+	useJUnitPlatform {
+		excludeTags 'integrationTest', 'systemTest'
+	}
+}
+
+tasks.register('integrationTest', Test) {
+	useJUnitPlatform {
+		includeTags 'integrationTest'
+		excludeTags 'systemTest'
+	}
+}
+
+tasks.register('systemTest', Test) {
+	useJUnitPlatform {
+		includeTags 'systemTest'
+	}
+}
