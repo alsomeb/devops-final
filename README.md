@@ -12,11 +12,11 @@
 ## Files in this project
 
 ### Docker files (found in root)
-- **Dockerfile** == I am using a Dockerfile to build my images
-- **.dockerignore** == list of files or directories that Docker is to ignore during the build process
+- **Dockerfile** == Jag använder en Dockerfile för att bygga img
+- **.dockerignore** == filer eller directory som undviks att läggas in i docker img vid byggning
 
 ### Github Actions
-- **.github/workflows** == Here is my yml files containing Github Actions config
+- **.github/workflows** == Här ligger yml filer med GitHub Actions konfigurering
 -  **Tester (Unit / IT)** körs automatiskt i alla branches på github vid push. ***(run-all-tests.yml)***
 - **Feature till PR:** Kör ***build-deploy-app.yml*** workflow samt återanvänder ***run-all-tests.yml*** workflow mha ***workflow_call***
 
