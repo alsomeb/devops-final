@@ -1,7 +1,8 @@
 name: run-all-tests
-on: # Kör Alla Unit tester I alla branches förutom Main, test
+on: # Kör Alla Unit tester I alla branches förutom Master/Main
   push:
     branches-ignore:
+      - master
       - main
 
 
