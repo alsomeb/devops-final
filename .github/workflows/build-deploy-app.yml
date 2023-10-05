@@ -13,12 +13,36 @@ env:
   BRANCH_NAME: ${{ github.base_ref }}
 
 
-  # HÄR BYGGER VI IMG OCH SKICKAR UPP TILL GHCR REGISTRY
+  # Kör Unit + Integration Test Innan Vi bygger Image och Push GHCR
 jobs:
-  # DRY - Återanvänder våran run-all-tests.yml med ett 'workflow_call'
-  test-application:
-    name: run tests
-    uses: ./.github/workflows/run-all-tests.yml
+  unit-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'corretto'
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2.8.1
+      - name: Execute Unit Tests
+        run: ./gradlew test
+
+  integration-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'corretto'
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2.8.1
+      - name: Execute Integration Tests
+        run: ./gradlew integrationTest
+
 
   build-and-push-application:
     name: build-and-push-application
