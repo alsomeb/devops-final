@@ -2,6 +2,8 @@
 
 ## All dependencies (check build.gradle)
 - Rest Assured
+- JaCoCo
+- Google CheckStyle
 
 ## How to run the tests & other commands in this Project with gradle wrapper
 - ```./gradlew test``` - Kör Unit Tests bara
