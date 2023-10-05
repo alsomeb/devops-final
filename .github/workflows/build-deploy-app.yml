@@ -104,7 +104,7 @@ jobs:
       image-url: ghcr.io/${{ github.repository }}/${{ github.base_ref }}
     services:
       app:
-        image: ${{image-url}} #testing
+        image: ${{env.image-url}} #testing
         credentials:
           username: ${{ github.actor }}
           password: ${{ secrets.token }}
