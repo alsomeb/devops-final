@@ -17,6 +17,7 @@
 
 ### Github Actions
 - **.github/workflows** == Här ligger yml filer med GitHub Actions konfigurering
--  **Tester (Unit / IT)** körs automatiskt i alla branches på github vid push. ***(run-all-tests.yml)***
-- **Feature till PR:** Kör ***build-deploy-app.yml*** workflow samt återanvänder ***run-all-tests.yml*** workflow mha ***workflow_call***
+-  **Tester (Unit)** körs automatiskt i alla branches förutom ***main*** vid push. ***(run-all-unit.yml)***
+- **Feature till PR:** Kör ALLA tester (unit, IT, system) ***build-deploy-testing-env.yml*** samt deploy till testing env
+- ***Merge PR*** triggar deploy till production workflow ***deploy-production.yml***
 
