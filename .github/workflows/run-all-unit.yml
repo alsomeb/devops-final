@@ -1,4 +1,4 @@
-name: run-all-tests
+name: run-all-unit
 on: # Kör Alla Unit tester I alla branches förutom Master/Main
   push:
     branches-ignore:
