@@ -1,0 +1,20 @@
+name: build and deploy testing env
+
+on:
+  push:
+    branches:
+      - master
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+  BRANCH_NAME: ${{ github.base_ref }}
+
+jobs:
+  # Fake Deploy Production Env
+  fake-deploy-prod-env:
+    name: Fake Deploy Application to Prod environment
+    runs-on: ubuntu-latest
+    steps:
+      - name: Push To Production
+        run: echo "Fake deployed production - ${{env.REGISTRY}}/${{env.IMAGE_NAME}}:${{env.BRANCH_NAME}}"

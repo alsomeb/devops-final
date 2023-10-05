@@ -1,4 +1,5 @@
-name: build image, package & Fake Deploy
+name: build and deploy testing env
+
 on:
   pull_request:
     branches:
@@ -12,46 +13,68 @@ env:
   # This value matches the branch or tag name shown on GitHub. For example, feature-branch-1.
   BRANCH_NAME: ${{ github.base_ref }}
 
-
-  # Kör Unit + Integration Test Innan Vi bygger Image och Push GHCR
 jobs:
+  #Använder annat workflow för tester
   unit-test:
+    name: Unit-Test
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - name: Set up JDK 17
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Java 17
         uses: actions/setup-java@v3
         with:
-          java-version: '17'
           distribution: 'corretto'
-      - name: Setup Gradle
-        uses: gradle/gradle-build-action@v2.8.1
+          java-version: '17'
+
+      # Give wrapper rw rights
+      - name: Chmod gradle wrapper
+        run: chmod +x ./gradlew
+
+      # Build With Gradle Action
+      - name: Build with Gradle
+        uses: gradle/gradle-build-action@749f47bda3e44aa060e82d7b3ef7e40d953bd629
         with:
           arguments: test
 
   integration-test:
+    name: Integration-Test
+    needs: unit-test
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - name: Set up JDK 17
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Java 17
         uses: actions/setup-java@v3
         with:
-          java-version: '17'
           distribution: 'corretto'
-      - name: Setup Gradle
-        uses: gradle/gradle-build-action@v2.8.1
+          java-version: '17'
+
+      # Give wrapper rw rights
+      - name: Chmod gradle wrapper
+        run: chmod +x ./gradlew
+
+      # Build With Gradle Action
+      - name: Build with Gradle
+        uses: gradle/gradle-build-action@749f47bda3e44aa060e82d7b3ef7e40d953bd629
         with:
           arguments: integrationTest
 
-
-  build-and-push-application:
-    name: build-and-push-application
+  # HÄR BYGGER VI IMG OCH SKICKAR UPP TILL GHCR REGISTRY
+  build-and-push:
+    name: build-and-push
     runs-on: ubuntu-latest
+    # So we can use this output in the next job
+    outputs:
+      tags: ${{env.REGISTRY}}/${{env.IMAGE_NAME}}:${{env.BRANCH_NAME}}
     # Sets the permissions granted to the `GITHUB_TOKEN` for the actions in this job.
     permissions:
       contents: read
       packages: write
-    needs: [unit-test, integration-test] # Behöver Unit + IT test innan kan bygga
+    # måste klara testerna först innan vi kan bygga applikationen
+    needs: [unit-test, integration-test]
     steps:
       - name: Check for GITHUB_TOKEN
         run: |
@@ -94,41 +117,44 @@ jobs:
           push: true
           tags: ${{env.REGISTRY}}/${{env.IMAGE_NAME}}:${{env.BRANCH_NAME}}
 
-
-  # Drar upp en Container med den byggda img sedan curl endpoint för att kolla att den funkar
   system-test:
-    name: System Test Built Image
+    name: system-test
+    needs: build-and-push
     runs-on: ubuntu-latest
-    needs: build-and-push-application
     services:
       app:
-        image: ${{env.REGISTRY}}/${{env.IMAGE_NAME}}:${{env.BRANCH_NAME}}
+        image: ${{ needs.build-and-push.outputs.tags }}
         credentials:
           username: ${{ github.actor }}
           password: ${{ secrets.token }}
         ports:
           - 8080:8080
         options: --health-cmd="curl -f http://localhost:8080/api/cars" --health-interval=10s --health-timeout=5s --health-retries=3
-
-    # System test the built image
     steps:
-      - uses: actions/checkout@v4
-      - name: Set up JDK 17
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Java 17
         uses: actions/setup-java@v3
         with:
-          java-version: '17'
           distribution: 'corretto'
+          java-version: '17'
 
-      - name: Setup Gradle
-        uses: gradle/gradle-build-action@v2.8.1
+      # Give wrapper rw rights
+      - name: Chmod gradle wrapper
+        run: chmod +x ./gradlew
+
+      # Build With Gradle Action
+      - name: Build with Gradle
+        uses: gradle/gradle-build-action@749f47bda3e44aa060e82d7b3ef7e40d953bd629
         with:
           arguments: systemTest
 
-        # Fake Deploy (CD)
-  fake-deploy:
-    name: Fake Deploy Application
+  # Fake Deploy Testing Env(CD)
+  fake-deploy-testing-env:
+    name: Fake Deploy Application to testing environment
     needs: system-test
     runs-on: ubuntu-latest
     steps:
       - name: Echo Image Name From GHCR Registry
-        run: echo "${{env.REGISTRY}}/${{env.IMAGE_NAME}}:${{env.BRANCH_NAME}}"
+        run: echo "Fake deployed to testing environment - ${{env.REGISTRY}}/${{env.IMAGE_NAME}}:${{env.BRANCH_NAME}}"
