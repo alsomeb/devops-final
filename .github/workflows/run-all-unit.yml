@@ -1,13 +1,6 @@
 name: run-all-unit
-on: # Kör Alla Unit tester I alla branches förutom Master/Main och inte på PR
+on: # Kör Alla Unit tester I alla branches
   push:
-    branches-ignore:
-      - master
-      - main
-  pull_request:
-    branches-ignore:
-      - master
-      - main
 
 
 jobs:
