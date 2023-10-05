@@ -74,7 +74,7 @@ jobs:
     steps:
       - name: Check for GITHUB_TOKEN
         run: |
-          if [ -z "${{ secrets.DEVOPS_FINAL }}" ]; then
+          if [ -z "${{ secrets.token }}" ]; then
             echo "You must provide an GITHUB_TOKEN secret."
             exit 1
           fi
@@ -104,7 +104,7 @@ jobs:
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
-          password: ${{ secrets.DEVOPS_FINAL }}
+          password: ${{ secrets.token }}
 
       - name: Extract metadata (tags, labels) for Docker
         id: meta
