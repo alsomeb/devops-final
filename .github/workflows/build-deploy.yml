@@ -121,6 +121,8 @@ jobs:
     name: system-test
     needs: build-and-push
     runs-on: ubuntu-latest
+    outputs:
+      image-url: ${{ needs.build-and-push.outputs.tags }}
     services:
       app:
         image: ${{ needs.build-and-push.outputs.tags }}
@@ -129,7 +131,7 @@ jobs:
           password: ${{ secrets.token }}
         ports:
           - 8080:8080
-        options: --health-cmd="curl -f http://localhost:8080/all" --health-interval=10s --health-timeout=5s --health-retries=3
+        options: --health-cmd="curl -f http://localhost:8080/api/cars" --health-interval=10s --health-timeout=5s --health-retries=3
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -152,9 +154,9 @@ jobs:
 
   # Fake Deploy (CD)
   fake-deploy:
-    name: Fake Deploy Application to testing enviroment
+    name: Fake Deploy Application to testing environment
     needs: system-test
     runs-on: ubuntu-latest
     steps:
       - name: Echo Image Name From GHCR Registry
-        run: echo "Fake deployed to testing enviroment ${{env.REGISTRY}}/${{env.IMAGE_NAME}}:${{env.BRANCH_NAME}}"
+        run: echo "Fake deployed to testing environment ${{needs.system-test.image-url}}"
