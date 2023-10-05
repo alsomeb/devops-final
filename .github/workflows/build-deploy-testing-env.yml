@@ -97,7 +97,7 @@ jobs:
       - name: Chmod gradle wrapper
         run: chmod +x ./gradlew
 
-      # Google CheckStyle report included in Image
+      # Google CheckStyle report included in Image deployed to GHCR
       - name: Run Checkstyle to include report in Image
         run: ./gradlew clean checkstyleMain checkstyleTest
 
