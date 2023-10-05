@@ -100,9 +100,11 @@ jobs:
     name: System Test Built Image
     runs-on: ubuntu-latest
     needs: build-and-push-application
+    env:
+      image-url: ${{env.REGISTRY}}/${{env.IMAGE_NAME}}:${{env.BRANCH_NAME}}
     services:
       app:
-        image: ${{env.REGISTRY}}/${{env.IMAGE_NAME}}:${{env.BRANCH_NAME}} #testing
+        image: ${{image-url}} #testing
         credentials:
           username: ${{ github.actor }}
           password: ${{ secrets.token }}
