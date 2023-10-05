@@ -121,8 +121,6 @@ jobs:
     name: system-test
     needs: build-and-push
     runs-on: ubuntu-latest
-    outputs:
-      image-url: ${{ needs.build-and-push.outputs.tags }}
     services:
       app:
         image: ${{ needs.build-and-push.outputs.tags }}
@@ -159,4 +157,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Echo Image Name From GHCR Registry
-        run: echo "Fake deployed to testing environment ${{needs.system-test.image-url}}"
+        run: echo "Fake deployed to testing environment - ${{env.REGISTRY}}/${{env.IMAGE_NAME}}:${{env.BRANCH_NAME}}"
