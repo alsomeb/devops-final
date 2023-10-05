@@ -10,6 +10,7 @@
 - ```./gradlew clean test jacocoTestReport``` Kör Unit test + Coverage
 - Rapporten genereras och finns tillgänglig på ```build/reports/jacoco/test/html/index.html```
 - ```./gradlew checkstyleMain checkstyleTest``` Google Checkstyle, säkerställer kod-standard
+- Checkstyle rapport tillgänglig: ```build/checkstyle/main.html```
 
 
 ## Files in this project

@@ -38,7 +38,7 @@ checkstyle {
 	configFile = file("${project.rootDir}/config/checkstyle/google_checks.xml")
 	toolVersion = '10.12.4'
 	reportsDir = file("${project.buildDir}/checkstyle")
-	showViolations = true // Denna rad visar felen i konsolen
+	showViolations = true
 }
 
 tasks.withType(Checkstyle) {
