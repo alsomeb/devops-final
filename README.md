@@ -7,6 +7,9 @@
 - ```./gradlew test``` - Kör Unit Tests bara
 - ```./gradlew systemTest``` Kör SystemTest med RestAssured (Riktig Nätverk Traffik)
 - ```./gradlew integrationTest``` Kör SystemTest + Integration Test (MockMvc IT + Rest Assured SystemTest)
+- ```./gradlew clean test jacocoTestReport``` Kör Unit test + Coverage
+- Rapporten genereras och finns tillgänglig på ```build/reports/jacoco/test/html/index.html```
+
 
 
 ## Files in this project
