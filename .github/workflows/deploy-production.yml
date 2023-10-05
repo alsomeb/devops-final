@@ -1,5 +1,5 @@
 # Denna triggas när vi väl merge in changes i main
-name: build and deploy testing env
+name: Deploy production env
 
 on:
   push:
