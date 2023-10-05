@@ -102,7 +102,7 @@ jobs:
     needs: build-and-push-application
     services:
       app:
-        image: ${{env.REGISTRY}}/${{env.IMAGE_NAME}}:${{env.BRANCH_NAME}}
+        image: ${{env.REGISTRY}}/${{env.IMAGE_NAME}}:${{env.BRANCH_NAME}} #testing
         credentials:
           username: ${{ github.actor }}
           password: ${{ secrets.token }}
