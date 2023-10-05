@@ -126,6 +126,7 @@ jobs:
     name: system-test
     needs: build-and-push
     runs-on: ubuntu-latest
+    # Testar Image Artifakt med curl
     services:
       app:
         image: ${{ needs.build-and-push.outputs.tags }}
