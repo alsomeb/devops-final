@@ -1,4 +1,4 @@
-name: build and deploy
+name: build and deploy testing env
 
 on:
   pull_request:
@@ -150,8 +150,8 @@ jobs:
         with:
           arguments: systemTest
 
-  # Fake Deploy (CD)
-  fake-deploy:
+  # Fake Deploy Testing Env(CD)
+  fake-deploy-testing-env:
     name: Fake Deploy Application to testing environment
     needs: system-test
     runs-on: ubuntu-latest
