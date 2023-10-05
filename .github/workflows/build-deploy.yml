@@ -68,7 +68,7 @@ jobs:
     runs-on: ubuntu-latest
     # So we can use this output in the next job
     outputs:
-      tags: ${{ steps.meta.outputs.tags }}
+      tags: ${{env.REGISTRY}}/${{env.IMAGE_NAME}}:${{env.BRANCH_NAME}}
     # Sets the permissions granted to the `GITHUB_TOKEN` for the actions in this job.
     permissions:
       contents: read
@@ -110,19 +110,12 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.token }}
 
-      - name: Extract metadata (tags, labels) for Docker
-        id: meta
-        uses: docker/metadata-action@v5.0.0
-        with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
-
       - name: Build and push From DockerFile
         uses: docker/build-push-action@v5
         with:
           context: . # Dockerfile is in root folder of context
           push: true
           tags: ${{env.REGISTRY}}/${{env.IMAGE_NAME}}:${{env.BRANCH_NAME}}
-          labels: ${{ steps.meta.outputs.labels }}
 
   system-test:
     name: system-test
@@ -164,4 +157,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Echo Image Name From GHCR Registry
-        run: echo "Fake deployed to testing enviroment ${{ needs.build-and-push.outputs.tags }}"
+        run: echo "Fake deployed to testing enviroment ${{env.REGISTRY}}/${{env.IMAGE_NAME}}:${{env.BRANCH_NAME}}"
