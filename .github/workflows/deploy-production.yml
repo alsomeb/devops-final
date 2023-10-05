@@ -1,3 +1,4 @@
+# Denna triggas när vi väl merge in changes i main
 name: build and deploy testing env
 
 on:
@@ -8,7 +9,7 @@ on:
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
-  BRANCH_NAME: ${{ github.base_ref }}
+  BRANCH_NAME: ${{ github.ref }} # Inte 'base_ref', den funkar bara på PR utan här måste de va 'github.ref'
 
 jobs:
   # Fake Deploy Production Env
