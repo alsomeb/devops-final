@@ -9,7 +9,7 @@ on:
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
-  BRANCH_NAME: ${{ github.ref }} # Inte 'base_ref', den funkar bara på PR utan här måste de va 'github.ref'
+  BRANCH_NAME: ${{ github.ref_name }} # Inte 'base_ref', den funkar bara på PR utan här måste de va 'github.ref_name'
 
 jobs:
   # Fake Deploy Production Env
