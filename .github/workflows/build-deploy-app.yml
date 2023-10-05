@@ -38,7 +38,7 @@ jobs:
     permissions:
       contents: read
       packages: write
-    needs: [unit-test, integration-test] # Behöver Unit + IT test innan kan bygga
+    needs: integration-test # Behöver Unit + IT test innan kan bygga
     steps:
       - name: Check for GITHUB_TOKEN
         run: |
