@@ -1,5 +1,5 @@
 name: run-all-unit
-on: # Kör Alla Unit tester I alla branches förutom Master/Main
+on: # Kör Alla Unit tester I alla branches förutom Master/Main och inte på PR
   push:
     branches-ignore:
       - master
