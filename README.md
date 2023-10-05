@@ -5,8 +5,8 @@
 
 ## How to run the tests with gradle wrapper
 - ```./gradlew test``` - Kör Unit Tests bara
-- ```./gradlew systemTest``` Kör SystemTest med RestAssured
-- ```./gradlew integrationTest``` Kör SystemTest + Integration Test
+- ```./gradlew systemTest``` Kör SystemTest med RestAssured (Riktig Nätverk Traffik)
+- ```./gradlew integrationTest``` Kör SystemTest + Integration Test (MockMvc IT + Rest Assured SystemTest)
 
 
 ## Files in this project
